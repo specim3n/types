@@ -6,6 +6,7 @@ export interface ISSelect {
 }
 
 export interface ISSelectOption {
+    id: string;
     name: string;
     value: any;
     selected?: boolean;
@@ -19,6 +20,7 @@ export interface ISSelectSpec extends ISSpec {
 }
 
 export interface ISSelectOptionSpec {
+    id: string;
     name: string;
     value: any;
 }

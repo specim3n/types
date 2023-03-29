@@ -6,6 +6,7 @@ export interface ISCheckbox {
 }
 
 export interface ISCheckboxOption {
+    id: string;
     name: string;
     value: any;
     checked?: boolean;
@@ -19,6 +20,7 @@ export interface ISCheckboxSpec extends ISSpec {
 }
 
 export interface ISCheckboxOptionSpec {
+    id: string;
     name: string;
     value: any;
 }
