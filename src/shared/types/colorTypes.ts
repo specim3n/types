@@ -16,4 +16,5 @@ export interface ISColor {
 
 export interface ISColorSpec extends ISSpec {
     format: 'hex' | 'hexa' | 'hsl' | 'hsla' | 'rgb' | 'rgba';
+    placeholder?: string;
 }

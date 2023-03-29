@@ -7,4 +7,5 @@ export interface ISInteger {
 export interface ISIntegerSpec extends ISSpec {
     min?: number;
     max?: number;
+    placeholder?: string;
 }

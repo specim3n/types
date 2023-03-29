@@ -7,4 +7,5 @@ export interface ISString {
 export interface ISStringSpec extends ISSpec {
     min?: number;
     max?: number;
+    placeholder?: string;
 }

@@ -17,6 +17,7 @@ export interface ISSelectSpec extends ISSpec {
     min?: number;
     max?: number;
     multiple?: boolean;
+    placeholder?: string;
 }
 
 export interface ISSelectOptionSpec {

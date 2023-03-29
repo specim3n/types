@@ -9,4 +9,5 @@ export interface ISDatetimeSpec extends ISSpec {
     calendar?: boolean;
     min?: string;
     max?: string;
+    placeholder?: string;
 }

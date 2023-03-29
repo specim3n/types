@@ -5,4 +5,5 @@ export interface ISNumber {
 export interface ISNumberSpec extends ISSpec {
     min?: number;
     max?: number;
+    placeholder?: string;
 }
