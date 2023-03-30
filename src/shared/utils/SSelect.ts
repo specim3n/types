@@ -4,6 +4,7 @@ import type {
     ISSelectOptionSpec,
     ISSelectOptionValue,
     ISSelectSpec,
+    ISSelectValue,
 } from '../types/selectTypes';
 
 /**
@@ -18,16 +19,18 @@ import type {
  *
  * @example         js
  * import { __SSelect } from '@specimen/types/utils';
- * const select = new __SSelect(data);
+ * const select = new __SSelect(spec, data);
  * select.isSelected('option-2');
+ * select.select('option-2');
+ * select.getSelectedIds();
  * // etc...
  *
  * @since           2.0.0
  * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
  */
 export default class SSelect {
-    _data: ISSelectData;
-    _spec: ISSelectSpec;
+    private _data: ISSelectData;
+    private _spec: ISSelectSpec;
 
     /**
      * @name        constructor
@@ -42,6 +45,11 @@ export default class SSelect {
     constructor(spec: ISSelectSpec, data: ISSelectData) {
         this._spec = spec;
         this._data = data;
+
+        // default value
+        if (!data.value?.length && spec.default) {
+            this.select(spec.default);
+        }
     }
 
     /**
@@ -86,14 +94,19 @@ export default class SSelect {
     select(id: ISSelectOptionId): ISSelectOptionSpec {
         const option = this.getOption(id);
         if (option && !this.isSelected(id)) {
-            this._data.value.push(
+            const valueToAdd =
                 option.value !== undefined
-                    ? {
+                    ? <ISSelectValue>{
                           id,
                           value: option.value,
                       }
-                    : id,
-            );
+                    : id;
+
+            if (this._spec.multiple) {
+                this._data.value.push(valueToAdd);
+            } else {
+                this._data.value = [valueToAdd];
+            }
         }
         return option;
     }
@@ -113,12 +126,10 @@ export default class SSelect {
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
     unselect(id: ISSelectOptionId): ISSelectOptionSpec {
-        const option = this.getOption(id);
-        if (this.isSelected(id)) {
-            const idx = this.getOptionIdx(id);
-            this._data.value?.splice?.(idx, 1);
-        }
-        return option;
+        const idx = this.getValueIdx(id);
+        if (idx === -1) return;
+        this._data.value?.splice?.(idx, 1);
+        return this.getOption(id);
     }
 
     /**
@@ -142,7 +153,7 @@ export default class SSelect {
      * @name        getOptionIdx
      * @type        Function
      *
-     * Returns you an the array value index for the requested option id
+     * Returns you an array index for the requested option id in the _spec.options array
      *
      * @param       {ISSelectOptionId}          id          The option id you want to get the idx back
      * @return      {Number}                                The array value idx of the requested option id or -1 if not found
@@ -160,12 +171,60 @@ export default class SSelect {
     }
 
     /**
+     * @name        getValueIdx
+     * @type        Function
+     *
+     * Returns you an array index for the requested option id in the _data.value array
+     *
+     * @param       {ISSelectOptionId}          id          The option id you want to get the idx back
+     * @return      {Number}                                The array value idx of the requested option id or -1 if not found
+     *
+     * @since       2.0.0
+     * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+     */
+    getValueIdx(id: ISSelectOptionId): number {
+        for (let [i, option] of this._data.value?.entries?.()) {
+            if (id === (option.id ?? option)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * @name        getSelected
+     * @type        Function
+     *
+     * Returns you an array of all the selected options. It can returns either an array of id's if theirs no value
+     * in the option, or an ISSelectValue object if their's a value in the spec option.
+     *
+     * @return      {(ISSelectOptionId|ISSelectValue)[]}                An array of all the selected ids or ISSelectValue objects
+     *
+     * @since       2.0.0
+     * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+     */
+    getSelected(): (ISSelectOptionId | ISSelectValue)[] {
+        const ids: (ISSelectOptionId | ISSelectValue)[] = [];
+        this._data.value?.forEach?.((item) => {
+            if (item.value !== undefined) {
+                ids.push({
+                    id: item.id,
+                    value: item.value,
+                });
+            } else {
+                ids.push(item.id ?? item);
+            }
+        });
+        return ids;
+    }
+
+    /**
      * @name        getSelectedIds
      * @type        Function
      *
      * Returns you an array of all the selected option's ids
      *
-     * @return      {String}                An array of all the selected ids
+     * @return      {String[]}                An array of all the selected ids
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)

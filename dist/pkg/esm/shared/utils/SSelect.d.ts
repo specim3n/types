@@ -1,8 +1,8 @@
-import type { ISSelectData, ISSelectOptionId, ISSelectOptionSpec, ISSelectOptionValue, ISSelectSpec } from '../types/selectTypes';
+import type { ISSelectData, ISSelectOptionId, ISSelectOptionSpec, ISSelectOptionValue, ISSelectSpec, ISSelectValue } from '../types/selectTypes';
 
 export default class SSelect {
-    _data: ISSelectData;
-    _spec: ISSelectSpec;
+    private _data;
+    private _spec;
     
     constructor(spec: ISSelectSpec, data: ISSelectData);
     
@@ -15,6 +15,10 @@ export default class SSelect {
     getOption(id: ISSelectOptionId): ISSelectOptionSpec;
     
     getOptionIdx(id: ISSelectOptionId): number;
+    
+    getValueIdx(id: ISSelectOptionId): number;
+    
+    getSelected(): (ISSelectOptionId | ISSelectValue)[];
     
     getSelectedIds(): ISSelectOptionId[];
 }

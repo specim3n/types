@@ -12,8 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * @example         js
  * import { __SSelect } from '@specimen/types/utils';
- * const select = new __SSelect(data);
+ * const select = new __SSelect(spec, data);
  * select.isSelected('option-2');
+ * select.select('option-2');
+ * select.getSelectedIds();
  * // etc...
  *
  * @since           2.0.0
@@ -31,8 +33,13 @@ class SSelect {
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
     constructor(spec, data) {
+        var _a;
         this._spec = spec;
         this._data = data;
+        // default value
+        if (!((_a = data.value) === null || _a === void 0 ? void 0 : _a.length) && spec.default) {
+            this.select(spec.default);
+        }
     }
     /**
      * @name        isSelected
@@ -75,12 +82,18 @@ class SSelect {
     select(id) {
         const option = this.getOption(id);
         if (option && !this.isSelected(id)) {
-            this._data.value.push(option.value !== undefined
+            const valueToAdd = option.value !== undefined
                 ? {
                     id,
                     value: option.value,
                 }
-                : id);
+                : id;
+            if (this._spec.multiple) {
+                this._data.value.push(valueToAdd);
+            }
+            else {
+                this._data.value = [valueToAdd];
+            }
         }
         return option;
     }
@@ -100,12 +113,11 @@ class SSelect {
      */
     unselect(id) {
         var _a, _b;
-        const option = this.getOption(id);
-        if (this.isSelected(id)) {
-            const idx = this.getOptionIdx(id);
-            (_b = (_a = this._data.value) === null || _a === void 0 ? void 0 : _a.splice) === null || _b === void 0 ? void 0 : _b.call(_a, idx, 1);
-        }
-        return option;
+        const idx = this.getValueIdx(id);
+        if (idx === -1)
+            return;
+        (_b = (_a = this._data.value) === null || _a === void 0 ? void 0 : _a.splice) === null || _b === void 0 ? void 0 : _b.call(_a, idx, 1);
+        return this.getOption(id);
     }
     /**
      * @name        getOption
@@ -127,7 +139,7 @@ class SSelect {
      * @name        getOptionIdx
      * @type        Function
      *
-     * Returns you an the array value index for the requested option id
+     * Returns you an array index for the requested option id in the _spec.options array
      *
      * @param       {ISSelectOptionId}          id          The option id you want to get the idx back
      * @return      {Number}                                The array value idx of the requested option id or -1 if not found
@@ -145,12 +157,62 @@ class SSelect {
         return -1;
     }
     /**
+     * @name        getValueIdx
+     * @type        Function
+     *
+     * Returns you an array index for the requested option id in the _data.value array
+     *
+     * @param       {ISSelectOptionId}          id          The option id you want to get the idx back
+     * @return      {Number}                                The array value idx of the requested option id or -1 if not found
+     *
+     * @since       2.0.0
+     * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+     */
+    getValueIdx(id) {
+        var _a, _b, _c;
+        for (let [i, option] of (_b = (_a = this._data.value) === null || _a === void 0 ? void 0 : _a.entries) === null || _b === void 0 ? void 0 : _b.call(_a)) {
+            if (id === ((_c = option.id) !== null && _c !== void 0 ? _c : option)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    /**
+     * @name        getSelected
+     * @type        Function
+     *
+     * Returns you an array of all the selected options. It can returns either an array of id's if theirs no value
+     * in the option, or an ISSelectValue object if their's a value in the spec option.
+     *
+     * @return      {(ISSelectOptionId|ISSelectValue)[]}                An array of all the selected ids or ISSelectValue objects
+     *
+     * @since       2.0.0
+     * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+     */
+    getSelected() {
+        var _a, _b;
+        const ids = [];
+        (_b = (_a = this._data.value) === null || _a === void 0 ? void 0 : _a.forEach) === null || _b === void 0 ? void 0 : _b.call(_a, (item) => {
+            var _a;
+            if (item.value !== undefined) {
+                ids.push({
+                    id: item.id,
+                    value: item.value,
+                });
+            }
+            else {
+                ids.push((_a = item.id) !== null && _a !== void 0 ? _a : item);
+            }
+        });
+        return ids;
+    }
+    /**
      * @name        getSelectedIds
      * @type        Function
      *
      * Returns you an array of all the selected option's ids
      *
-     * @return      {String}                An array of all the selected ids
+     * @return      {String[]}                An array of all the selected ids
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
@@ -166,4 +228,4 @@ class SSelect {
     }
 }
 exports.default = SSelect;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBUUE7Ozs7Ozs7Ozs7Ozs7Ozs7OztHQWtCRztBQUNILE1BQXFCLE9BQU87SUFJeEI7Ozs7Ozs7OztPQVNHO0lBQ0gsWUFBWSxJQUFrQixFQUFFLElBQWtCO1FBQzlDLElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDO1FBQ2xCLElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDO0lBQ3RCLENBQUM7SUFFRDs7Ozs7Ozs7Ozs7OztPQWFHO0lBQ0gsVUFBVSxDQUFDLFNBQWlEOztRQUN4RCxnQkFBZ0I7UUFDaEIsSUFBSSxNQUFBLE1BQUEsSUFBSSxDQUFDLEtBQUssQ0FBQyxLQUFLLDBDQUFFLFFBQVEsbURBQUcsU0FBUyxDQUFDLEVBQUU7WUFDekMsT0FBTyxJQUFJLENBQUM7U0FDZjtRQUVELGlCQUFpQjtRQUNqQixNQUFNLFNBQVMsR0FBRyxNQUFBLFNBQVMsQ0FBQyxFQUFFLG1DQUFJLFNBQVMsQ0FBQztRQUM1QyxPQUFPLElBQUksQ0FBQyxjQUFjLEVBQUUsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLENBQUM7SUFDckQsQ0FBQztJQUVEOzs7Ozs7Ozs7Ozs7O09BYUc7SUFDSCxNQUFNLENBQUMsRUFBb0I7UUFDdkIsTUFBTSxNQUFNLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxFQUFFLENBQUMsQ0FBQztRQUNsQyxJQUFJLE1BQU0sSUFBSSxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsRUFBRSxDQUFDLEVBQUU7WUFDaEMsSUFBSSxDQUFDLEtBQUssQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUNqQixNQUFNLENBQUMsS0FBSyxLQUFLLFNBQVM7Z0JBQ3RCLENBQUMsQ0FBQztvQkFDSSxFQUFFO29CQUNGLEtBQUssRUFBRSxNQUFNLENBQUMsS0FBSztpQkFDdEI7Z0JBQ0gsQ0FBQyxDQUFDLEVBQUUsQ0FDWCxDQUFDO1NBQ0w7UUFDRCxPQUFPLE1BQU0sQ0FBQztJQUNsQixDQUFDO0lBRUQ7Ozs7Ozs7Ozs7Ozs7T0FhRztJQUNILFFBQVEsQ0FBQyxFQUFvQjs7UUFDekIsTUFBTSxNQUFNLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxFQUFFLENBQUMsQ0FBQztRQUNsQyxJQUFJLElBQUksQ0FBQyxVQUFVLENBQUMsRUFBRSxDQUFDLEVBQUU7WUFDckIsTUFBTSxHQUFHLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxFQUFFLENBQUMsQ0FBQztZQUNsQyxNQUFBLE1BQUEsSUFBSSxDQUFDLEtBQUssQ0FBQyxLQUFLLDBDQUFFLE1BQU0sbURBQUcsR0FBRyxFQUFFLENBQUMsQ0FBQyxDQUFDO1NBQ3RDO1FBQ0QsT0FBTyxNQUFNLENBQUM7SUFDbEIsQ0FBQztJQUVEOzs7Ozs7Ozs7OztPQVdHO0lBQ0gsU0FBUyxDQUFDLEVBQW9CO1FBQzFCLE1BQU0sR0FBRyxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsRUFBRSxDQUFDLENBQUM7UUFDbEMsT0FBTyxJQUFJLENBQUMsS0FBSyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsQ0FBQztJQUNuQyxDQUFDO0lBRUQ7Ozs7Ozs7Ozs7O09BV0c7SUFDSCxZQUFZLENBQUMsRUFBb0I7O1FBQzdCLEtBQUssSUFBSSxDQUFDLENBQUMsRUFBRSxNQUFNLENBQUMsSUFBSSxNQUFBLE1BQUEsSUFBSSxDQUFDLEtBQUssQ0FBQyxPQUFPLEVBQUMsT0FBTyxrREFBSSxFQUFFO1lBQ3BELElBQUksRUFBRSxLQUFLLENBQUMsTUFBQSxNQUFNLENBQUMsRUFBRSxtQ0FBSSxNQUFNLENBQUMsRUFBRTtnQkFDOUIsT0FBTyxDQUFDLENBQUM7YUFDWjtTQUNKO1FBQ0QsT0FBTyxDQUFDLENBQUMsQ0FBQztJQUNkLENBQUM7SUFFRDs7Ozs7Ozs7OztPQVVHO0lBQ0gsY0FBYzs7UUFDVixNQUFNLEdBQUcsR0FBdUIsRUFBRSxDQUFDO1FBQ25DLE1BQUEsTUFBQSxJQUFJLENBQUMsS0FBSyxDQUFDLEtBQUssMENBQUUsT0FBTyxtREFBRyxDQUFDLElBQUksRUFBRSxFQUFFOztZQUNqQyxHQUFHLENBQUMsSUFBSSxDQUFDLE1BQUEsSUFBSSxDQUFDLEVBQUUsbUNBQUksSUFBSSxDQUFDLENBQUM7UUFDOUIsQ0FBQyxDQUFDLENBQUM7UUFDSCxPQUFPLEdBQUcsQ0FBQztJQUNmLENBQUM7Q0FDSjtBQXhKRCwwQkF3SkMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBU0E7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0dBb0JHO0FBQ0gsTUFBcUIsT0FBTztJQUl4Qjs7Ozs7Ozs7O09BU0c7SUFDSCxZQUFZLElBQWtCLEVBQUUsSUFBa0I7O1FBQzlDLElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDO1FBQ2xCLElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDO1FBRWxCLGdCQUFnQjtRQUNoQixJQUFJLENBQUMsQ0FBQSxNQUFBLElBQUksQ0FBQyxLQUFLLDBDQUFFLE1BQU0sQ0FBQSxJQUFJLElBQUksQ0FBQyxPQUFPLEVBQUU7WUFDckMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUM7U0FDN0I7SUFDTCxDQUFDO0lBRUQ7Ozs7Ozs7Ozs7Ozs7T0FhRztJQUNILFVBQVUsQ0FBQyxTQUFpRDs7UUFDeEQsZ0JBQWdCO1FBQ2hCLElBQUksTUFBQSxNQUFBLElBQUksQ0FBQyxLQUFLLENBQUMsS0FBSywwQ0FBRSxRQUFRLG1EQUFHLFNBQVMsQ0FBQyxFQUFFO1lBQ3pDLE9BQU8sSUFBSSxDQUFDO1NBQ2Y7UUFFRCxpQkFBaUI7UUFDakIsTUFBTSxTQUFTLEdBQUcsTUFBQSxTQUFTLENBQUMsRUFBRSxtQ0FBSSxTQUFTLENBQUM7UUFDNUMsT0FBTyxJQUFJLENBQUMsY0FBYyxFQUFFLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxDQUFDO0lBQ3JELENBQUM7SUFFRDs7Ozs7Ozs7Ozs7OztPQWFHO0lBQ0gsTUFBTSxDQUFDLEVBQW9CO1FBQ3ZCLE1BQU0sTUFBTSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsRUFBRSxDQUFDLENBQUM7UUFDbEMsSUFBSSxNQUFNLElBQUksQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLEVBQUUsQ0FBQyxFQUFFO1lBQ2hDLE1BQU0sVUFB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
