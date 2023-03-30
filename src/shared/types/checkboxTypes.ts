@@ -1,26 +1,18 @@
 import type { ISSpec } from './specTypes';
 
-export interface ISCheckbox {
-    options: ISCheckboxOption[];
-    value: any[];
-}
+export type ISCheckboxOptionId = string;
 
-export interface ISCheckboxOption {
-    id: string;
-    name: string;
-    value: any;
-    checked?: boolean;
+export interface ISCheckbox {
+    value: ISCheckboxOptionId[];
 }
 
 export interface ISCheckboxSpec extends ISSpec {
     options: ISCheckboxOptionSpec[];
     min?: number;
     max?: number;
-    multiple?: boolean;
 }
 
 export interface ISCheckboxOptionSpec {
-    id: string;
+    id: ISCheckboxOptionId;
     name: string;
-    value: any;
 }

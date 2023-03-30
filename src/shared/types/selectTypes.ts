@@ -1,15 +1,15 @@
 import type { ISSpec } from './specTypes';
 
-export interface ISSelect {
-    options: ISSelectOption[];
-    value: any[];
+export type ISSelectOptionId = string;
+export type ISSelectOptionValue = any;
+
+export interface ISSelectValue {
+    id: ISSelectOptionId;
+    value: ISSelectOptionValue;
 }
 
-export interface ISSelectOption {
-    id: string;
-    name: string;
-    value: any;
-    selected?: boolean;
+export interface ISSelectData {
+    value: (ISSelectOptionId | ISSelectValue)[];
 }
 
 export interface ISSelectSpec extends ISSpec {
@@ -21,7 +21,7 @@ export interface ISSelectSpec extends ISSpec {
 }
 
 export interface ISSelectOptionSpec {
-    id: string;
+    id: ISSelectOptionId;
     name: string;
-    value: any;
+    value: ISSelectOptionValue;
 }

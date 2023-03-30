@@ -14,6 +14,10 @@
             "require": "./dist/pkg/cjs/shared/_exports.js",
             "import": "./dist/pkg/esm/shared/_exports.js"
         },
+        "./utils": {
+            "require": "./dist/pkg/cjs/shared/utils/_exports.js",
+            "import": "./dist/pkg/esm/shared/utils/_exports.js"
+        },
         "./shared/*": {
             "require": "./dist/pkg/cjs/shared/*.js",
             "import": "./dist/pkg/esm/shared/*.js"
