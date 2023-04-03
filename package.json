@@ -31,5 +31,8 @@
             "import": "./dist/pkg/esm/js/*.js"
         }
     },
-    "homepage": "https://coffeekraken.io"
+    "homepage": "https://coffeekraken.io",
+    "dependencies": {
+        "@coffeekraken/s-color": "^2.0.0-alpha.26"
+    }
 }

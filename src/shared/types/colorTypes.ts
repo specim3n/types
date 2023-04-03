@@ -1,6 +1,9 @@
 import type { ISSpec } from './specTypes';
 
-export interface ISColor {
+export type ISColorValue = string;
+export type ISColorFormat = 'hex' | 'hexa' | 'hsl' | 'hsla' | 'rgb' | 'rgba';
+
+export interface ISColorData {
     h?: number;
     s?: number;
     l?: number;
@@ -10,11 +13,11 @@ export interface ISColor {
     b?: number;
     hex?: string;
     hexa?: string;
-    format: 'hex' | 'hexa' | 'hsl' | 'hsla' | 'rgb' | 'rgba';
-    value: string;
+    format: ISColorFormat;
+    value: ISColorValue;
 }
 
 export interface ISColorSpec extends ISSpec {
-    format: 'hex' | 'hexa' | 'hsl' | 'hsla' | 'rgb' | 'rgba';
+    format: ISColorFormat;
     placeholder?: string;
 }

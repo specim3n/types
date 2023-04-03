@@ -1,5 +1,5 @@
 import type { ISSpec } from './specTypes';
-export interface ISImage {
+export interface ISImageData {
     url: string;
     alt?: string;
     title?: string;

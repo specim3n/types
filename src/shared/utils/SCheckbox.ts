@@ -1,36 +1,36 @@
 import type {
-    ISSelectData,
-    ISSelectHasOptionId,
-    ISSelectOptionId,
-    ISSelectOptionSpec,
-    ISSelectSpec,
-    ISSelectValue,
+    ISCheckboxData,
+    ISCheckboxHasOptionId,
+    ISCheckboxOptionId,
+    ISCheckboxOptionSpec,
+    ISCheckboxSpec,
+    ISCheckboxValue,
 } from '../types/selectTypes';
 
 /**
- * @name            SSelect
+ * @name            SCheckbox
  * @namespace       shared.utils
  * @type            Class
  * @platform        node
  * @platform        js
  * @status          beta
  *
- * This class wrap an ISSelectData object and gives you access to util methods like `isSelected` and more.
+ * This class wrap an ISCheckboxData object and gives you access to util methods like `isChecked` and more.
  *
  * @example         js
- * import { __SSelect } from '@specimen/types/utils';
- * const select = new __SSelect(spec, data);
- * select.isSelected('option-2');
+ * import { __SCheckbox } from '@specimen/types/utils';
+ * const select = new __SCheckbox(spec, data);
+ * select.isChecked('option-2');
  * select.select('option-2');
- * select.getSelectedIds();
+ * select.getCheckedIds();
  * // etc...
  *
  * @since           2.0.0
  * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
  */
-export default class SSelect {
-    private _data: ISSelectData;
-    private _spec: ISSelectSpec;
+export default class SCheckbox {
+    private _data: ISCheckboxData;
+    private _spec: ISCheckboxSpec;
 
     /**
      * @name        constructor
@@ -42,83 +42,79 @@ export default class SSelect {
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    constructor(spec: ISSelectSpec, data: ISSelectData) {
+    constructor(spec: ISCheckboxSpec, data: ISCheckboxData) {
         this._spec = spec;
         this._data = data;
 
         // default value
         if (!data.value?.length && spec.default) {
-            this.select(spec.default);
+            this.check(spec.default);
         }
     }
 
     /**
-     * @name        isSelected
+     * @name        isChecked
      * @type        Function
      *
-     * Pass a value object or an option id to check if it is selected or not.
+     * Pass a value object or an option id to check if it is checked or not
      *
-     * @param       {ISSelectOptionId|ISSelectOptionvalue}          idOrValue          The option (id) or value to check
-     * @return      {Boolean}                                                           true if selected, false if not
+     * @param       {ISCheckboxOptionId|ISCheckboxOptionvalue}          idOrValue          The option id or value to check
+     * @return      {Boolean}                                                           true if checked, false if not
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    isSelected(idOrValue: ISSelectOptionId | ISSelectHasOptionId): boolean {
+    isChecked(idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId): boolean {
         // in depth check
         const idToCheck =
-            (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
-        return this.getSelectedIds().includes(idToCheck);
+            (<ISCheckboxHasOptionId>idOrValue).id ?? <string>idOrValue;
+        return this.getCheckedIds().includes(idToCheck);
     }
 
     /**
-     * @name        select
+     * @name        check
      * @type        Function
      *
-     * Allows you to select an ISSelectOption.
+     * Allows you to check an ISCheckboxOption.
      *
      * @param       {ISSelectOptionId|ISSelectHasOptionId}          idOrValue        The option (id) you want to select
-     * @return      {ISSelectOptionSpec}            The added option
+     * @return      {ISCheckboxOptionSpec}            The added option
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    select(
-        idOrValue: ISSelectOptionId | ISSelectHasOptionId,
-    ): ISSelectOptionSpec {
-        const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
+    check(
+        idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId,
+    ): ISCheckboxOptionSpec {
+        const id = (<ISCheckboxHasOptionId>idOrValue).id ?? <string>idOrValue;
         const option = this.getOption(id);
-        if (option && !this.isSelected(id)) {
-            const valueToAdd = <ISSelectValue>{
+        if (option && !this.isChecked(id)) {
+            const valueToAdd = <ISCheckboxValue>{
                 id,
                 value: option.value,
             };
 
-            if (this._spec.multiple) {
-                this._data.value.push(valueToAdd);
-            } else {
-                this._data.value = [valueToAdd];
-            }
+            this._data.value.push(valueToAdd);
         }
         return option;
     }
 
     /**
-     * @name        unselect
+     * @name        uncheck
      * @type        Function
      *
-     * Allows you to unselect an ISSelectOption.
+     * Allows you to uncheck an ISCheckboxOption.
      *
      * @param       {ISSelectOptionId|ISSelectHasOptionId}          idOrValue       The option (id) you want to select
-     * @return      {ISSelectOptionSpec}                The removed option
+     * @return      {ISCheckboxOptionSpec}                The removed option
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    unselect(
-        idOrValue: ISSelectOptionId | ISSelectHasOptionId,
-    ): ISSelectOptionSpec {
-        const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
+    uncheck(
+        idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId,
+    ): ISCheckboxOptionSpec {
+        const id = (<ISCheckboxHasOptionId>idOrValue).id ?? <string>idOrValue;
         const idx = this.getValueIdx(id);
         if (idx === -1) return;
         this._data.value?.splice?.(idx, 1);
@@ -129,18 +125,18 @@ export default class SSelect {
      * @name        getOption
      * @type        Function
      *
-     * Returns you an ISSelectOptionSpec object for the requested option id
+     * Returns you an ISCheckboxOptionSpec object for the requested option id
      *
      * @param       {ISSelectOptionId|ISSelectHasOptionId}          idOrValue          The option (id) you want to get back
-     * @return      {ISSelectOptionSpec}                         The grabed option spec object
+     * @return      {ISCheckboxOptionSpec}                         The grabed option spec object
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
     getOption(
-        idOrValue: ISSelectOptionId | ISSelectHasOptionId,
-    ): ISSelectOptionSpec {
-        const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
+        idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId,
+    ): ISCheckboxOptionSpec {
+        const id = (<ISCheckboxHasOptionId>idOrValue).id ?? <string>idOrValue;
         const idx = this.getOptionIdx(id);
         return this._spec.options[idx];
     }
@@ -157,8 +153,10 @@ export default class SSelect {
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    getOptionIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number {
-        const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
+    getOptionIdx(
+        idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId,
+    ): number {
+        const id = (<ISCheckboxHasOptionId>idOrValue).id ?? <string>idOrValue;
         for (let [i, option] of this._spec.options.entries?.()) {
             if (id === (option.id ?? option)) {
                 return i;
@@ -168,10 +166,10 @@ export default class SSelect {
     }
 
     /**
-     * @name        getValueIdx
+     * @name        getValue
      * @type        Function
      *
-     * Returns an integer representing where is the requested value in the value array
+     * Returns you the value corresponding to the passed ISCheckboxHasOptionId | ISCheckboxOptionId.
      *
      * @param       {ISSelectOptionId|ISSelectHasOptionId}          idOrValue          The option (id) you want to get the idx back
      * @return      {Number}                                The array value idx of the requested option id or -1 if not found
@@ -179,7 +177,9 @@ export default class SSelect {
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    getValue(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectValue {
+    getValue(
+        idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId,
+    ): ISCheckboxValue {
         const idx = this.getValueIdx(idOrValue);
         return this._data.value[idx];
     }
@@ -188,7 +188,7 @@ export default class SSelect {
      * @name        getValueIdx
      * @type        Function
      *
-     * Returns you an array index for the requested option id in the _data.value array
+     * Returns you an idx integer representing where is the requested value in the value array
      *
      * @param       {ISSelectOptionId|ISSelectHasOptionId}          idOrValue          The option (id) you want to get the idx back
      * @return      {Number}                                The array value idx of the requested option id or -1 if not found
@@ -196,8 +196,8 @@ export default class SSelect {
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    getValueIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number {
-        const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
+    getValueIdx(idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId): number {
+        const id = (<ISCheckboxHasOptionId>idOrValue).id ?? <string>idOrValue;
         for (let [i, option] of this._data.value?.entries?.()) {
             if (id === (option.id ?? option)) {
                 return i;
@@ -207,18 +207,18 @@ export default class SSelect {
     }
 
     /**
-     * @name        getSelected
+     * @name        getChecked
      * @type        Function
      *
-     * Returns you an array of all the selected options.
+     * Returns you an array of all the checked options.
      *
-     * @return      {(ISSelectOptionId|ISSelectValue)[]}                An array of all the selected ids or ISSelectValue objects
+     * @return      {(ISCheckboxOptionId|ISCheckboxValue)[]}                An array of all the checked ids or ISCheckboxValue objects
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    getSelected(): ISSelectValue[] {
-        const ids: ISSelectValue[] = [];
+    getChecked(): ISCheckboxValue[] {
+        const ids: ISCheckboxValue[] = [];
         this._data.value?.forEach?.((item) => {
             ids.push({
                 id: item.id,
@@ -229,18 +229,18 @@ export default class SSelect {
     }
 
     /**
-     * @name        getSelectedIds
+     * @name        getCheckedIds
      * @type        Function
      *
-     * Returns you an array of all the selected option's ids
+     * Returns you an array of all the checked option's ids
      *
-     * @return      {String[]}                An array of all the selected ids
+     * @return      {String[]}                An array of all the checked ids
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    getSelectedIds(): ISSelectOptionId[] {
-        const ids: ISSelectOptionId[] = [];
+    getCheckedIds(): ISCheckboxOptionId[] {
+        const ids: ISCheckboxOptionId[] = [];
         this._data.value?.forEach?.((item) => {
             ids.push(item.id);
         });

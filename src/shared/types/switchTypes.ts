@@ -1,6 +1,6 @@
 import type { ISSpec } from './specTypes';
 
-export interface ISSwitch {
+export interface ISSwitchData {
     value: boolean;
 }
 

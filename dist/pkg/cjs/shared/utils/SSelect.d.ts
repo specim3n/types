@@ -1,4 +1,4 @@
-import type { ISSelectData, ISSelectOptionId, ISSelectOptionSpec, ISSelectOptionValue, ISSelectSpec, ISSelectValue } from '../types/selectTypes';
+import type { ISSelectData, ISSelectHasOptionId, ISSelectOptionId, ISSelectOptionSpec, ISSelectSpec, ISSelectValue } from '../types/selectTypes';
 
 export default class SSelect {
     private _data;
@@ -6,19 +6,19 @@ export default class SSelect {
     
     constructor(spec: ISSelectSpec, data: ISSelectData);
     
-    isSelected(idOrValue: ISSelectOptionId | ISSelectOptionValue): boolean;
+    isSelected(idOrValue: ISSelectOptionId | ISSelectHasOptionId): boolean;
     
-    select(id: ISSelectOptionId): ISSelectOptionSpec;
+    select(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectOptionSpec;
     
-    unselect(id: ISSelectOptionId): ISSelectOptionSpec;
+    unselect(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectOptionSpec;
     
-    getOption(id: ISSelectOptionId): ISSelectOptionSpec;
+    getOption(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectOptionSpec;
     
-    getOptionIdx(id: ISSelectOptionId): number;
+    getOptionIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number;
     
-    getValueIdx(id: ISSelectOptionId): number;
+    getValueIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number;
     
-    getSelected(): (ISSelectOptionId | ISSelectValue)[];
+    getSelected(): ISSelectValue[];
     
     getSelectedIds(): ISSelectOptionId[];
 }

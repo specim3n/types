@@ -1,6 +1,6 @@
 import type { ISSpec } from './specTypes';
 
-export interface ISVideo {
+export interface ISVideoData {
     url: string;
     source: Record<string, string>; // 'video/mp4': 'movie.mp4'
     controls: boolean;

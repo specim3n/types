@@ -1,6 +1,6 @@
 import type { ISSpec } from './specTypes';
 
-export interface ISString {
+export interface ISStringData {
     value: string;
 }
 

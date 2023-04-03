@@ -3,13 +3,17 @@ import type { ISSpec } from './specTypes';
 export type ISSelectOptionId = string;
 export type ISSelectOptionValue = any;
 
+export interface ISSelectHasOptionId {
+    id: ISSelectOptionId;
+}
+
 export interface ISSelectValue {
     id: ISSelectOptionId;
     value: ISSelectOptionValue;
 }
 
 export interface ISSelectData {
-    value: (ISSelectOptionId | ISSelectValue)[];
+    value: ISSelectValue[];
 }
 
 export interface ISSelectSpec extends ISSpec {
@@ -23,5 +27,5 @@ export interface ISSelectSpec extends ISSpec {
 export interface ISSelectOptionSpec {
     id: ISSelectOptionId;
     name: string;
-    value: ISSelectOptionValue;
+    value?: ISSelectOptionValue;
 }
