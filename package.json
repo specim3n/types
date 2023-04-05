@@ -1,7 +1,7 @@
 {
     "independent": true,
     "name": "@specimen/types",
-    "version": "1.0.0-alpha.1",
+    "version": "2.0.0-alpha.27",
     "description": "Base package that store the different specimen standard types and interfaces.",
     "type": "module",
     "author": "Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)",
@@ -33,6 +33,6 @@
     },
     "homepage": "https://coffeekraken.io",
     "dependencies": {
-        "@coffeekraken/s-color": "^2.0.0-alpha.26"
+        "@coffeekraken/s-color": "^2.0.0-alpha.27"
     }
 }

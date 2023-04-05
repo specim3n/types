@@ -1,9 +1,11 @@
 import type { ISSpec } from './specTypes';
-export interface ISImageData {
+export interface ISImageMediaData {
     url: string;
+}
+export interface ISImageData {
     alt?: string;
     title?: string;
-    media: Record<string, string>;
+    media: Record<string, ISImageMediaData>;
 }
 export interface ISImageSpec extends ISSpec {
 }
