@@ -3,6 +3,7 @@ export interface ISImageMediaData {
     url: string;
 }
 export interface ISImageData {
+    url: string;
     alt?: string;
     title?: string;
     media: Record<string, ISImageMediaData>;

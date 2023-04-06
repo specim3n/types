@@ -5,9 +5,12 @@ export interface ISImageMediaData {
 }
 
 export interface ISImageData {
+    url: string;
     alt?: string;
     title?: string;
-    media: Record<string, ISImageMediaData>; // '(max-width: 799px)': { url: '/my/cool/image.jpg' }
+    media: Record<string, ISImageMediaData>;
+    // '(max-width: 799px)': { url: 'something.jpg' }
+    // mobile: { url: 'else.jpg' }
 }
 
 export interface ISImageSpec extends ISSpec {}

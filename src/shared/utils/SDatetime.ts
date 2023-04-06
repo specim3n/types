@@ -257,7 +257,7 @@ export default class SDatetime {
         if (!this._spec.disabled || !this._spec.disabled.length) {
             return false;
         }
-        return SDatetime._isDateDisabled(this._date, this._spec.disabled);
+        return SDatetime.isDateDisabled(this._date, this._spec.disabled);
     }
 
     /**
@@ -282,12 +282,13 @@ export default class SDatetime {
      *
      * Return the formatted datetime string using the proper spec format
      *
+     * @param       {String}            [format=this._spec.format]          The format of the output ou want
      * @return      {String}                            The formatted datetime
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    toString(): string {
-        return __format(this._date, this._spec.format);
+    toString(format: string = this._spec.format): string {
+        return __format(this._date, format);
     }
 }

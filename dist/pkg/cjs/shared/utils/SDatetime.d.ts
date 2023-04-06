@@ -27,5 +27,5 @@ export default class SDatetime {
     
     format(format: string): string;
     
-    toString(): string;
+    toString(format?: string): string;
 }

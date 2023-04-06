@@ -1,7 +1,14 @@
 import type { ISSpec } from './specTypes';
-export interface ISVideoData {
+export interface ISVideoSourceData {
     url: string;
-    source: Record<string, string>;
+}
+export interface ISVideoSourcesData {
+    webm: ISVideoSourceData;
+    mp4: ISVideoSourceData;
+    ogg: ISVideoSourceData;
+}
+export interface ISVideoData {
+    sources: Partial<ISVideoSourcesData>;
     controls: boolean;
     autoplay: boolean;
     muted: boolean;

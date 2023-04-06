@@ -9,4 +9,5 @@ export * from './selectTypes';
 export * from './specTypes';
 export * from './stringTypes';
 export * from './switchTypes';
+export * from './videoTypes';
 export * from './wysiwygTypes';
