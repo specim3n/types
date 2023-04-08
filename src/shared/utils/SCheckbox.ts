@@ -46,6 +46,11 @@ export default class SCheckbox {
         this._spec = spec;
         this._data = data;
 
+        // data structure
+        if (!Array.isArray(data.value)) {
+            data.value = [];
+        }
+
         // default value
         if (!data.value?.length && spec.default) {
             this.check(spec.default);
