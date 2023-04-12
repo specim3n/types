@@ -8,6 +8,7 @@ export interface ISSpec {
         | 'Integer'
         | 'Number'
         | 'Select'
+        | 'Spaces'
         | 'String'
         | 'Switch'
         | 'Video'
@@ -16,4 +17,5 @@ export interface ISSpec {
     description: string;
     default?: any;
     required?: boolean;
+    responsive?: boolean;
 }

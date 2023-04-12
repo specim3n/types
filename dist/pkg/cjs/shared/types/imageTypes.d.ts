@@ -9,4 +9,10 @@ export interface ISImageData {
     media: Record<string, ISImageMediaData>;
 }
 export interface ISImageSpec extends ISSpec {
+    alt?: boolean;
+    maxWidth?: number;
+    maxHeight?: number;
+    minWidth?: number;
+    minHeight?: number;
+    maxSize?: number;
 }

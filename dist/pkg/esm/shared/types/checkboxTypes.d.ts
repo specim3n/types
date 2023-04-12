@@ -6,7 +6,7 @@ export interface ISCheckboxHasOptionId {
 }
 export interface ISCheckboxValue {
     id: ISCheckboxOptionId;
-    value: ISCheckboxOptionValue;
+    value?: ISCheckboxOptionValue;
 }
 export interface ISCheckboxData {
     value: ISCheckboxValue[];

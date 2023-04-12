@@ -53,6 +53,22 @@ export default class SSelect {
     }
 
     /**
+     * @name        isEmpty
+     * @type        Function
+     *
+     * Returns you if the select has something selected or not
+     *
+     * @return      {Boolean}                                                           true if empty, false if not
+     *
+     * @since       2.0.0
+     * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+     */
+    isEmpty(): boolean {
+        // in depth check
+        return this.getSelectedIds().length === 0;
+    }
+
+    /**
      * @name        isSelected
      * @type        Function
      *

@@ -7,13 +7,13 @@ export interface ISVideoSourceData {
 }
 
 export interface ISVideoSourcesData {
-    webm: ISVideoSourceData;
-    mp4: ISVideoSourceData;
-    ogg: ISVideoSourceData;
+    webm?: ISVideoSourceData;
+    mp4?: ISVideoSourceData;
+    ogg?: ISVideoSourceData;
 }
 
 export interface ISVideoData {
-    sources: Partial<ISVideoSourcesData>;
+    sources: ISVideoSourcesData;
     controls: boolean;
     autoplay: boolean;
     muted: boolean;
@@ -23,4 +23,5 @@ export interface ISVideoSpec extends ISSpec {
     controls: boolean;
     autoplay: boolean;
     muted: boolean;
+    maxSize?: number; // size in bytes
 }

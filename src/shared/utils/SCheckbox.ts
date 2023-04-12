@@ -58,6 +58,22 @@ export default class SCheckbox {
     }
 
     /**
+     * @name        isEmpty
+     * @type        Function
+     *
+     * Returns you if some checkboxes have something selected or not
+     *
+     * @return      {Boolean}                                                           true if empty, false if not
+     *
+     * @since       2.0.0
+     * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
+     */
+    isEmpty(): boolean {
+        // in depth check
+        return this.getCheckedIds().length === 0;
+    }
+
+    /**
      * @name        isChecked
      * @type        Function
      *

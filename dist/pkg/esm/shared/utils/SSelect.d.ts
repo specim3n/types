@@ -6,6 +6,8 @@ export default class SSelect {
     
     constructor(spec: ISSelectSpec, data: ISSelectData);
     
+    isEmpty(): boolean;
+    
     isSelected(idOrValue: ISSelectOptionId | ISSelectHasOptionId): boolean;
     
     select(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectOptionSpec;
@@ -15,6 +17,8 @@ export default class SSelect {
     getOption(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectOptionSpec;
     
     getOptionIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number;
+    
+    getValue(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectValue;
     
     getValueIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number;
     

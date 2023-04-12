@@ -13,4 +13,11 @@ export interface ISImageData {
     // mobile: { url: 'else.jpg' }
 }
 
-export interface ISImageSpec extends ISSpec {}
+export interface ISImageSpec extends ISSpec {
+    alt?: boolean;
+    maxWidth?: number; // in px
+    maxHeight?: number; // in px
+    minWidth?: number; // in px
+    minHeight?: number; // in px
+    maxSize?: number; // size in bytes
+}

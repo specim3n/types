@@ -6,6 +6,8 @@ export default class SCheckbox {
     
     constructor(spec: ISCheckboxSpec, data: ISCheckboxData);
     
+    isEmpty(): boolean;
+    
     isChecked(idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId): boolean;
     
     check(idOrValue: ISCheckboxOptionId | ISCheckboxHasOptionId): ISCheckboxOptionSpec;

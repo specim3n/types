@@ -6,13 +6,13 @@ export interface ISWysiwygData {
 export interface ISWysiwygNodeData {
     type: string;
     text?: string;
-    isBlock: boolean;
+    block: boolean;
     data: any;
     nodes: ISWysiwygNodeData[];
 }
 export interface ISWysiwygRootData {
     type: 'root';
-    isBlock: true;
+    block: true;
     nodes: ISWysiwygNodeData[];
 }
 

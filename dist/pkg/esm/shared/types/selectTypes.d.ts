@@ -6,7 +6,7 @@ export interface ISSelectHasOptionId {
 }
 export interface ISSelectValue {
     id: ISSelectOptionId;
-    value: ISSelectOptionValue;
+    value?: ISSelectOptionValue;
 }
 export interface ISSelectData {
     value: ISSelectValue[];
