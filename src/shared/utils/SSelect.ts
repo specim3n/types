@@ -83,7 +83,7 @@ export default class SSelect {
     isSelected(idOrValue: ISSelectOptionId | ISSelectHasOptionId): boolean {
         // in depth check
         const idToCheck =
-            (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
+            (<ISSelectHasOptionId>idOrValue)?.id ?? <string>idOrValue;
         return this.getSelectedIds().includes(idToCheck);
     }
 
