@@ -1,15 +1,25 @@
 import type { ISSpec } from './specTypes';
 
 export interface ISLayoutData {
-    layout: string;
-    media: Record<string, string>;
+    layout: ISLayoutDataLayout;
+    media: Record<string, ISLayoutDataLayout>;
     cells: string[];
     id?: string;
     frontspec?: any;
     gap?: string;
 }
 
+export interface ISLayoutDataLayout {
+    id: string;
+    layout: string;
+}
+
 export interface ISLayoutSpec extends ISSpec {
-    layouts: Record<string, string>;
+    layouts: ISLayoutSpecLayout[];
     custom?: boolean;
+}
+
+export interface ISLayoutSpecLayout {
+    id: string;
+    layout: string;
 }

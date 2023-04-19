@@ -4,6 +4,8 @@ export * from './colorTypes';
 export * from './datetimeTypes';
 export * from './imageTypes';
 export * from './integerTypes';
+export * from './layoutTypes';
+export * from './mediaTypes';
 export * from './numberTypes';
 export * from './selectTypes';
 export * from './specTypes';
