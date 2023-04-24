@@ -1,8 +1,8 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 export interface ISImageMediaData {
     url: string;
 }
-export interface ISImageData {
+export interface ISImageData extends ISSpecData {
     url: string;
     alt?: string;
     title?: string;

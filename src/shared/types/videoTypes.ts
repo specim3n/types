@@ -1,4 +1,4 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 
 export type ISVideoFormat = 'webm' | 'mp4' | 'ogg';
 
@@ -12,7 +12,7 @@ export interface ISVideoSourcesData {
     ogg?: ISVideoSourceData;
 }
 
-export interface ISVideoData {
+export interface ISVideoData extends ISSpecData {
     sources: ISVideoSourcesData;
     controls: boolean;
     autoplay: boolean;

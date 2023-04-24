@@ -1,5 +1,5 @@
-import type { ISSpec } from './specTypes';
-export interface ISDatetimeData {
+import type { ISSpec, ISSpecData } from './specTypes';
+export interface ISDatetimeData extends ISSpecData {
     iso: string;
     value: string;
     format: string;

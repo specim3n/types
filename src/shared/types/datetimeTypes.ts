@@ -1,6 +1,6 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 
-export interface ISDatetimeData {
+export interface ISDatetimeData extends ISSpecData {
     iso: string; // 2011-10-05T14:48:00.000Z
     value: string; // 2023-10-23
     format: string; // YYYY-MM-DD

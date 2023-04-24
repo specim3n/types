@@ -1,4 +1,4 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 export type ISSelectOptionId = string;
 export type ISSelectOptionValue = any;
 export interface ISSelectHasOptionId {
@@ -8,7 +8,7 @@ export interface ISSelectValue {
     id: ISSelectOptionId;
     value?: ISSelectOptionValue;
 }
-export interface ISSelectData {
+export interface ISSelectData extends ISSpecData {
     value: ISSelectValue[];
 }
 export interface ISSelectSpec extends ISSpec {

@@ -6,3 +6,6 @@ export interface ISSpec {
     required?: boolean;
     responsive?: boolean;
 }
+export interface ISSpecData {
+    id?: string;
+}

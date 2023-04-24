@@ -1,6 +1,6 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 
-export interface ISIntegerData {
+export interface ISIntegerData extends ISSpecData {
     value: string;
 }
 

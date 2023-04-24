@@ -1,5 +1,5 @@
-import type { ISSpec } from './specTypes';
-export interface ISLayoutData {
+import type { ISSpec, ISSpecData } from './specTypes';
+export interface ISLayoutData extends ISSpecData {
     layout: ISLayoutDataLayout;
     media: Record<string, ISLayoutDataLayout>;
     cells: string[];

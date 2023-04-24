@@ -1,4 +1,4 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 export interface ISSpacesMediaData {
     paddingTop?: string | number;
     paddingRight?: string | number;
@@ -9,7 +9,7 @@ export interface ISSpacesMediaData {
     marginBottom?: string | number;
     marginLeft?: string | number;
 }
-export interface ISSpacesData {
+export interface ISSpacesData extends ISSpecData {
     media: Record<string, ISSpacesMediaData>;
 }
 export interface ISSpacesSpec extends ISSpec {

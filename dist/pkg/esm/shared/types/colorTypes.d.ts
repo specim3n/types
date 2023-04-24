@@ -1,7 +1,7 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 export type ISColorValue = string;
 export type ISColorFormat = 'hex' | 'hexa' | 'hsl' | 'hsla' | 'rgb' | 'rgba';
-export interface ISColorData {
+export interface ISColorData extends ISSpecData {
     h?: number;
     s?: number;
     l?: number;

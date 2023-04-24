@@ -1,6 +1,6 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 
-export interface ISWysiwygData {
+export interface ISWysiwygData extends ISSpecData {
     value: ISWysiwygRootData;
 }
 export interface ISWysiwygNodeData {

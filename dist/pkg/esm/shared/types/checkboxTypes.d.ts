@@ -1,4 +1,4 @@
-import type { ISSpec } from './specTypes';
+import type { ISSpec, ISSpecData } from './specTypes';
 export type ISCheckboxOptionId = string;
 export type ISCheckboxOptionValue = any;
 export interface ISCheckboxHasOptionId {
@@ -8,7 +8,7 @@ export interface ISCheckboxValue {
     id: ISCheckboxOptionId;
     value?: ISCheckboxOptionValue;
 }
-export interface ISCheckboxData {
+export interface ISCheckboxData extends ISSpecData {
     value: ISCheckboxValue[];
 }
 export interface ISCheckboxSpec extends ISSpec {
