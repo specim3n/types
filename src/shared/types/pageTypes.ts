@@ -1,11 +1,11 @@
 export interface ISPageNode {
-    id?: string;
+    uid?: string;
     type: 'root' | 'container' | 'component';
     nodes: Record<string, ISPageNode>;
 }
 
 export interface ISPage extends ISPageNode {
-    id: string;
+    uid: string;
     type: 'root';
     layout: string;
 }
