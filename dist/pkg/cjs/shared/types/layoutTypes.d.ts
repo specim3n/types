@@ -2,7 +2,7 @@ import type { ISSpec, ISSpecData } from './specTypes';
 export interface ISLayoutData extends ISSpecData {
     container: boolean;
     media: Record<string, string>;
-    areas: Record<string, string>;
+    nodes: Record<string, string>;
     id?: string;
     frontspec?: any;
     gap?: string;
