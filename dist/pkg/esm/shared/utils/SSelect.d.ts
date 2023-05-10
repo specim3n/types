@@ -22,7 +22,7 @@ export default class SSelect {
     
     getValueIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number;
     
-    getSelected(): ISSelectValue[];
+    getSelected(): ISSelectValue | ISSelectValue[];
     
     getSelectedIds(): ISSelectOptionId[];
 }

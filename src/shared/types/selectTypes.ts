@@ -13,7 +13,7 @@ export interface ISSelectValue {
 }
 
 export interface ISSelectData extends ISSpecData {
-    value: ISSelectValue[];
+    value: ISSelectValue | ISSelectValue[];
 }
 
 export interface ISSelectSpec extends ISSpec {

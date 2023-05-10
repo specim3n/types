@@ -171,7 +171,7 @@ class SCheckbox {
      * Returns you the value corresponding to the passed ISCheckboxHasOptionId | ISCheckboxOptionId.
      *
      * @param       {ISSelectOptionId|ISSelectHasOptionId}          idOrValue          The option (id) you want to get the idx back
-     * @return      {Number}                                The array value idx of the requested option id or -1 if not found
+     * @return      {ISCheckboxValue[]}                                The value object for a specific idx or value
      *
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)

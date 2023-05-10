@@ -13,7 +13,7 @@ export interface ISCheckboxValue {
 }
 
 export interface ISCheckboxData extends ISSpecData {
-    value: ISCheckboxValue[];
+    value: ISCheckboxValue | ISCheckboxValue[];
 }
 
 export interface ISCheckboxSpec extends ISSpec {

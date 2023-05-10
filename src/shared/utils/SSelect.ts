@@ -46,6 +46,13 @@ export default class SSelect {
         this._spec = spec;
         this._data = data;
 
+        // default
+        if (!this._data.value) {
+            if (this._spec.multiple) {
+                this._data.value = [];
+            }
+        }
+
         // default value
         if (!data.value?.length && spec.default) {
             this.select(spec.default);
@@ -113,7 +120,7 @@ export default class SSelect {
             if (this._spec.multiple) {
                 this._data.value.push(valueToAdd);
             } else {
-                this._data.value = [valueToAdd];
+                this._data.value = valueToAdd;
             }
         }
         return option;
@@ -137,7 +144,11 @@ export default class SSelect {
         const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
         const idx = this.getValueIdx(id);
         if (idx === -1) return;
-        this._data.value?.splice?.(idx, 1);
+        if (this._spec.multiple) {
+            this._data.value?.splice?.(idx, 1);
+        } else if (id === this._data.value?.id) {
+            this._data.value = null;
+        }
         return this.getOption(id);
     }
 
@@ -184,7 +195,7 @@ export default class SSelect {
     }
 
     /**
-     * @name        getValueIdx
+     * @name        getValue
      * @type        Function
      *
      * Returns an integer representing where is the requested value in the value array
@@ -196,8 +207,11 @@ export default class SSelect {
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
     getValue(idOrValue: ISSelectOptionId | ISSelectHasOptionId): ISSelectValue {
-        const idx = this.getValueIdx(idOrValue);
-        return this._data.value[idx];
+        if (this._spec.multiple) {
+            const idx = this.getValueIdx(idOrValue);
+            return this._data.value[idx];
+        }
+        return <ISSelectValue>this._data.value;
     }
 
     /**
@@ -214,10 +228,14 @@ export default class SSelect {
      */
     getValueIdx(idOrValue: ISSelectOptionId | ISSelectHasOptionId): number {
         const id = (<ISSelectHasOptionId>idOrValue).id ?? <string>idOrValue;
-        for (let [i, option] of this._data.value?.entries?.()) {
-            if (id === (option.id ?? option)) {
-                return i;
+        if (this._spec.multiple) {
+            for (let [i, option] of this._data.value?.entries?.()) {
+                if (id === (option.id ?? option)) {
+                    return i;
+                }
             }
+        } else {
+            return 0;
         }
         return -1;
     }
@@ -233,7 +251,7 @@ export default class SSelect {
      * @since       2.0.0
      * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://coffeekraken.io)
      */
-    getSelected(): ISSelectValue[] {
+    getSelected(): ISSelectValue | ISSelectValue[] {
         const ids: ISSelectValue[] = [];
         this._data.value?.forEach?.((item) => {
             ids.push({
@@ -241,7 +259,10 @@ export default class SSelect {
                 value: item.value,
             });
         });
-        return ids;
+        if (this._spec.multiple) {
+            return ids;
+        }
+        return ids[0];
     }
 
     /**
@@ -257,9 +278,15 @@ export default class SSelect {
      */
     getSelectedIds(): ISSelectOptionId[] {
         const ids: ISSelectOptionId[] = [];
-        this._data.value?.forEach?.((item) => {
-            ids.push(item.id);
-        });
+        if (this._spec.multiple) {
+            this._data.value?.forEach?.((item) => {
+                ids.push(item.id);
+            });
+        } else {
+            if (this._data.value?.id) {
+                ids.push(this._data.value.id);
+            }
+        }
         return ids;
     }
 }
