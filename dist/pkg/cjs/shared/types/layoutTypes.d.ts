@@ -6,7 +6,16 @@ export interface ISLayoutData extends ISSpecData {
     html?: string;
     id?: string;
     frontspec?: any;
-    gap?: string;
+    gap?: ISLayoutDataGap;
+    spacing?: ISLayoutDataSpacing;
+}
+export interface ISLayoutDataGap {
+    id: string;
+    value: string;
+}
+export interface ISLayoutDataSpacing {
+    id: string;
+    value: string;
 }
 export interface ISLayoutSpec extends ISSpec {
     layouts: ISLayoutSpecLayout[];
